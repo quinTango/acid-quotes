@@ -2,7 +2,12 @@
   <div class="container">
     <progress-bar :progressUnit="quotes.length"></progress-bar>
     <quote-creator :addQuote="addQuote"></quote-creator>
-    <quote v-for="(quote, i) in quotes" :removeQuote="removeQuote" :index="i"> {{quote}}</quote>
+    <quote v-for="(quote, i) in quotes" :removeQuote="removeQuote" :index="i">
+      <h1 v-if="quote['author']">
+        {{quote['author']}}
+      </h1>
+      <div> {{quote['content']}} </div>
+    </quote>
   </div>
 </template>
 
@@ -18,13 +23,13 @@
       "quote": Quote,
     },
     data: function () {
-      return { 
-        quotes: ["Locooo", "Alright!"],
+      return {
+        quotes: [{content: "Locooo"}, {content: "Alright!"}, {content: "yeaaa", author: "billy"}],
       }
     },
     methods: {
-      addQuote: function (text) {
-        this.quotes.push(text);
+      addQuote: function (quote) {
+        this.quotes.push(quote);
       },
       removeQuote: function (index, ev) {
         console.log("here");

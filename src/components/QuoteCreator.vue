@@ -1,7 +1,8 @@
 <template lang="pug">
   div.ex-quote-creator
-    textarea(autofocus v-model="text" ref="quoteInput")
-    button.btn.btn-primary(@click="publishQuote(text)")
+    input( v-model="author" ref="quoteInput")
+    textarea( v-model="text" ref="quoteInput")
+    button.btn.btn-primary(@click="publishQuote()")
       | Add Quote
 
 </template>
@@ -11,15 +12,22 @@
     props: ["addQuote"],
     data: function () {
       return {
-        text: ""
+        text: "",
+        author: ""
       }
     },
     methods: {
-      publishQuote: function (text) {
-        if(text.length > 1) {
-          this.text = ""
-          this.$refs.quoteInput.focus();
-          this.addQuote(text);
+      publishQuote: function () {
+        if(this.text.length > 1) {
+          if(this.author.length > 1) {
+            this.addQuote({content: this.text, author: this.author });
+            this.author = "";
+            this.text = "";
+          }else {
+            // this.$refs.quoteInput.focus();
+            this.addQuote({content: this.text});
+            this.text = "";
+          }
         }
       }
     }
